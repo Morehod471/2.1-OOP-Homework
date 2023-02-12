@@ -3,13 +3,9 @@ package Transport;
 import static Transport.CarService.validOption;
 import static Transport.CarService.validTrait;
 
-public class Car {
-    private final String brand;
-    private final String model;
+public class Car extends Transport {
+
     private double engineVolume;
-    private String color;
-    private final Integer year;
-    private final String country;
 
     private String transmission;
     private final String body;
@@ -19,14 +15,10 @@ public class Car {
 
     private Key key;
 
-    public Car(String brand, String model, double engineVolume, String color, Integer year, String country,
+    public Car(String brand, String model, double engineVolume, String color, Integer year, String country, int maxSpeed,
                String transmission, String body, String number, int seats, String tyres, Key key) {
-        this.brand = validCarTrait(brand);
-        this.model = validCarTrait(model);
+        super(brand, model, color, year, country, maxSpeed);
         this.engineVolume = validEnginePower(engineVolume);
-        this.color = validColor(color);
-        this.year = validYear(year);
-        this.country = validCarTrait(country);
         this.transmission = validCarTrait(transmission);
         this.body = validCarTrait(body);
         this.number = validCarTrait(number);
@@ -43,27 +35,28 @@ public class Car {
                 ", color='" + color + '\'' +
                 ", year=" + year +
                 ", country='" + country + '\'' +
+                ", maxSpeed=" + maxSpeed +
                 ", transmission='" + transmission + '\'' +
                 ", body='" + body + '\'' +
                 ", number='" + number + '\'' +
                 ", seats=" + seats +
                 ", tyres='" + tyres + '\'' +
-                ", " + key;
+                ", key=" + key;
     }
 
-    public static String validCarTrait(String value) {
+    public String validCarTrait(String value) {
         return validTrait(value, "default");
     }
 
-    public static double validEnginePower(double value) {
+    public double validEnginePower(double value) {
         return value < 0 ? 1.5 : value;
     }
 
-    public static String validColor(String value) {
+    public String validColor(String value) {
         return validTrait(value, "white");
     }
 
-    public static Integer validYear(Integer value) {
+    public Integer validYear(Integer value) {
         return value <= 0 ? 2000 : value;
     }
 
@@ -80,34 +73,32 @@ public class Car {
         }
     }
 
-    public String getBrand() { return brand;}
+    public double getEngineVolume() {
+        return engineVolume;
+    }
 
-    public String getModel() { return model;}
+    public String getTransmission() {
+        return transmission;
+    }
 
-    public double getEngineVolume() { return engineVolume;}
+    public String getBody() {
+        return body;
+    }
 
-    public String getColor() { return color;}
+    public String getNumber() {
+        return number;
+    }
 
-    public Integer getYear() { return year;}
+    public int getSeats() {
+        return seats;
+    }
 
-    public String getCountry() { return country;}
-
-    public String getTransmission() { return transmission;}
-
-    public String getBody() { return body;}
-
-    public String getNumber() { return number;}
-
-    public int getSeats() { return seats;}
-
-    public String getTyres() { return tyres;}
+    public String getTyres() {
+        return tyres;
+    }
 
     public void setEngineVolume(double engineVolume) {
         this.engineVolume = engineVolume;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public void setTransmission(String transmission) {
@@ -127,14 +118,14 @@ public class Car {
         private boolean remoteEngineStart;
         private boolean noKey;
 
-        public Key (Boolean remoteEngineStart, boolean noKey) {
+        public Key(Boolean remoteEngineStart, boolean noKey) {
             this.remoteEngineStart = validOption(remoteEngineStart);
             this.noKey = validOption(noKey);
         }
 
         @Override
         public String toString() {
-            return  "remoteEngineStart = " + remoteEngineStart +
+            return "remoteEngineStart = " + remoteEngineStart +
                     ", noKey = " + noKey;
         }
     }
